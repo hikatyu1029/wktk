@@ -1,13 +1,28 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wktk/common/user_common.dart';
 
 class LoginViewModel extends ChangeNotifier {
   late String email;
   late String password;
+  bool loginAble = false;
 
-  // Firebase Authenticationを利用するためのインスタンス
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  Future<void> login() async {}
+
+  void checkLoginAble() {
+    if (checkEmail() && checkPassword()) {
+      loginAble = true;
+      notifyListeners();
+      return;
+    }
+    loginAble = false;
+    notifyListeners();
+  }
+
+  bool checkEmail() {
+    return UserCommon.checkEmailFormat(email);
+  }
+
+  bool checkPassword() {
+    return UserCommon.checkPasswordFormat(password);
+  }
 }

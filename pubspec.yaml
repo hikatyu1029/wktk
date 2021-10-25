@@ -47,6 +47,12 @@ dependencies:
   firebase_auth: ^3.1.4
   cloud_firestore: ^2.5.4
 
+  # googleサインイン用
+  google_sign_in: ^5.2.0
+
+  # サインインボタン用
+  flutter_signin_button: ^2.0.0
+
   # アニメーションイイネボタン用
   # https://pub.dev/packages/like_button/install
   like_button: ^2.0.3

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wktk/view/component/bottom_navigation_bar.dart';
 import 'package:wktk/view/login_view.dart';
+import 'package:wktk/view/start_view.dart';
 import 'package:wktk/view/time_line_view.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -30,11 +31,15 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           title: 'wktk',
-          theme: ThemeData(),
-          darkTheme: ThemeData.dark(),
+          theme: ThemeData(primarySwatch: Colors.deepOrange),
+
+          darkTheme: ThemeData(
+              primarySwatch: Colors.deepOrange,
+              brightness: Brightness.dark,
+              accentColor: Colors.deepOrangeAccent),
           // テーマのモードは端末の設定によるものにする
           themeMode: ThemeMode.system,
-          home: LoginView(),
+          home: StartView(),
         ));
   }
 }

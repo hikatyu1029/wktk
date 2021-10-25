@@ -10,7 +10,7 @@ class LoginView extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => LoginViewModel())
       ],
-      child: LoginViewBody(),
+      child: const LoginViewBody(),
     );
   }
 }
@@ -20,7 +20,7 @@ class LoginViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var vm = Provider.of<LoginViewModel>(context, listen: false);
+    var vm = Provider.of<LoginViewModel>(context);
     return Scaffold(
         body: Center(
       child: Column(
@@ -37,6 +37,7 @@ class LoginViewBody extends StatelessWidget {
                 decoration: InputDecoration(labelText: "メールアドレス"),
                 onChanged: (String value) {
                   vm.email = value;
+                  vm.checkLoginAble();
                 },
               )),
           // パスワードの入力フォーム
@@ -48,14 +49,17 @@ class LoginViewBody extends StatelessWidget {
               maxLength: 20, // 入力可能な文字数
               onChanged: (String value) {
                 vm.password = value;
+                vm.checkLoginAble();
               },
             ),
           ),
           ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => MainView()));
-            },
+            onPressed: vm.loginAble
+                ? null
+                : () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MainView()));
+                  },
             child: Text('ログイン'),
           )
         ],

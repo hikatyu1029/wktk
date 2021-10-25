@@ -10,6 +10,8 @@ import 'package:wktk/view/profile_view.dart';
 import 'package:wktk/view_model/time_line_view_model.dart';
 
 class MainView extends StatelessWidget {
+  const MainView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
