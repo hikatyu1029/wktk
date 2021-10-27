@@ -7,6 +7,7 @@ import 'package:wktk/view/component/timeline_tile.dart';
 import 'package:wktk/view/favorite_view.dart';
 import 'package:wktk/view/post_view.dart';
 import 'package:wktk/view/profile_view.dart';
+import 'package:wktk/view/timeline_view.dart';
 import 'package:wktk/view_model/time_line_view_model.dart';
 
 class MainView extends StatelessWidget {
@@ -51,37 +52,5 @@ class MainViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return currentTab[
         Provider.of<BottomNavigationBarProvider>(context).currentIndex];
-  }
-}
-
-class TimeLineView extends StatelessWidget {
-  const TimeLineView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream:
-          Provider.of<TimeLineViewModel>(context, listen: false).getPostList(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return const Text('読み込みに失敗しました。');
-        }
-
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 10,
-            ),
-          );
-        }
-
-        return ListView(
-          children: snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-            return TimelineTile(data['text']);
-          }).toList(),
-        );
-      },
-    );
   }
 }

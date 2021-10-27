@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:wktk/view/component/bottom_navigation_bar.dart';
 import 'package:wktk/view/login_view.dart';
 import 'package:wktk/view/start_view.dart';
-import 'package:wktk/view/time_line_view.dart';
+import 'package:wktk/view/main_view.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';

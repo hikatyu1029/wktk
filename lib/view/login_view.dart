@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wktk/view/time_line_view.dart';
+import 'package:wktk/view/main_view.dart';
 import 'package:wktk/view_model/login_view_model.dart';
 
 class LoginView extends StatelessWidget {
@@ -54,11 +54,19 @@ class LoginViewBody extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: vm.loginAble
+            onPressed: !vm.loginAble
                 ? null
                 : () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => MainView()));
+                    // TODO:ログイン処理
+                    try {
+                      vm.login();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MainView()));
+                    } catch (e) {
+                      rethrow;
+                    }
                   },
             child: Text('ログイン'),
           )

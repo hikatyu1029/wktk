@@ -26,13 +26,20 @@ class StartViewBody extends StatelessWidget {
         body: Center(
             child: Column(mainAxisSize: MainAxisSize.min, children: [
       Expanded(child: Text(''), flex: 2),
-      const Text(
-        '今日の「w k t k」',
-        style: TextStyle(fontSize: 30, fontFamily: 'Rampart One'),
-      ),
-      const Text(
-        '見つけよう、シェアしよう。',
-        style: TextStyle(fontSize: 30, fontFamily: 'Rampart One'),
+      Container(
+        margin: EdgeInsets.all(5),
+        child: Column(
+          children: [
+            const Text(
+              '今日の「w k t k」',
+              style: TextStyle(fontSize: 28, fontFamily: 'Rampart One'),
+            ),
+            const Text(
+              '見つけよう、シェアしよう。',
+              style: TextStyle(fontSize: 28, fontFamily: 'Rampart One'),
+            ),
+          ],
+        ),
       ),
       Container(
           margin: EdgeInsets.all(50),

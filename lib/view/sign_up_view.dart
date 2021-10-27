@@ -4,7 +4,8 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import 'package:wktk/view/time_line_view.dart';
+import 'package:wktk/view/main_view.dart';
+import 'package:wktk/view/profile_edit_view.dart';
 import 'package:wktk/view_model/sign_up_view_model.dart';
 
 class SignUpView extends StatelessWidget {
@@ -64,10 +65,10 @@ class SignUpViewBody extends StatelessWidget {
                       : () async {
                           try {
                             vm.SignUp();
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const MainView()));
+                                    builder: (context) => ProfileEditView()));
                             return;
                           } catch (e) {
                             rethrow;
