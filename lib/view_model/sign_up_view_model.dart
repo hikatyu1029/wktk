@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wktk/common/user_common.dart';
+import 'package:wktk/service/auth_service.dart';
 
 class SignUpViewModel extends ChangeNotifier {
   late String newUserEmail = '';
@@ -34,8 +35,7 @@ class SignUpViewModel extends ChangeNotifier {
     try {
       // メールアドレス、パスワードでユーザー登録
       final FirebaseAuth auth = FirebaseAuth.instance;
-      await auth.createUserWithEmailAndPassword(
-          email: newUserEmail, password: newUserPassword);
+      AuthService().createUser(newUserEmail, newUserPassword);
     } catch (e) {
       rethrow;
     }

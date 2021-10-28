@@ -4,6 +4,7 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:wktk/service/auth_service.dart';
 import 'package:wktk/view/main_view.dart';
 import 'package:wktk/view/profile_edit_view.dart';
 import 'package:wktk/view_model/sign_up_view_model.dart';

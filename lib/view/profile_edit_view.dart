@@ -1,26 +1,43 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:wktk/service/auth_service.dart';
 import 'package:wktk/view/main_view.dart';
-import 'package:wktk/view_model/profile_edit_view.model.dart';
+import 'package:wktk/view_model/profile_edit_view_model.dart';
 
 class ProfileEditView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => ProfileEditViewModel())
-    ], child: ProfileEditViewBody());
+      ChangeNotifierProvider<ProfileEditViewModel>(
+          create: (_) => ProfileEditViewModel())
+    ], child: CurrentUserGetFutureBuilder());
   }
 }
 
 // 画面表示が責務
 // プロフィール画像を表示する部分
+class CurrentUserGetFutureBuilder extends StatelessWidget {
+  Widget build(BuildContext context) {
+    var vm = Provider.of<ProfileEditViewModel>(context, listen: false);
+    return FutureBuilder(
+        future: AuthService().getCurrentUser(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            vm.currentUser = snapshot.data as User?;
+            return ProfileEditViewBody();
+          } else {
+            return CircularProgressIndicator();
+          }
+        });
+  }
+}
+
 class ProfileEditViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
-    var vm = Provider.of<ProfileEditViewModel>(context);
+    // TODO:ViewModel初期化時にエラーしてるっぽい
+    var vm = Provider.of<ProfileEditViewModel>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -42,7 +59,9 @@ class ProfileEditViewBody extends StatelessWidget {
                 child: Material(
                   color: Colors.transparent,
                   child: Ink.image(
-                    image: (vm.profileImage.image),
+                    image: (Image.network(
+                            'https://pbs.twimg.com/profile_images/479856017438556160/TUPKOb9i_400x400.jpeg')
+                        .image),
                     fit: BoxFit.cover,
                     width: 128,
                     height: 128,
@@ -52,33 +71,25 @@ class ProfileEditViewBody extends StatelessWidget {
                         final ImagePicker _picker = ImagePicker();
                         final XFile? image = await _picker.pickImage(
                             source: ImageSource.gallery);
-                        vm.setProfileImage(Image.file(File(image!.path)));
                       },
                     ),
                   ),
                 ),
-              )
-              // IconButton(
-              //     onPressed: () async {
-              //       // Pick an image
-              //       final ImagePicker _picker = ImagePicker();
-              //       final XFile? image =
-              //           await _picker.pickImage(source: ImageSource.gallery);
-              //       vm.setProfileImage(Image.file(File(image!.path)));
-              //     },
-              //     icon: vm.profileImage),
-              ),
+              )),
           Padding(
               padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
               child: TextFormField(
                 decoration: InputDecoration(labelText: "ユーザー名"),
-                onChanged: (String value) {},
+                onChanged: (String value) {
+                  vm.currentUserName = value;
+                },
               )),
           Padding(
               padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
               child: TextFormField(
                 style: TextStyle(color: Colors.grey),
-                controller: TextEditingController()..text = 'aaaaa@bbbbbn.com',
+                controller: TextEditingController()
+                  ..text = vm.currentUser!.email!,
                 decoration: InputDecoration(labelText: "メールアドレス"),
                 onChanged: (String value) {},
                 enableInteractiveSelection: false,
@@ -88,9 +99,8 @@ class ProfileEditViewBody extends StatelessWidget {
               margin: EdgeInsets.all(50),
               child: ElevatedButton(
                 onPressed: () async {
-                  // TODO:アカウント作成画面への遷移
-
-                  print('アカウント作成画面へ');
+                  // TODO:アップデート失敗時の処理
+                  vm.updateCurrentUser();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => MainView()));
                 },
@@ -99,8 +109,8 @@ class ProfileEditViewBody extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(100))),
                 child: Container(
-                    child: Text(
-                  '「w k t k」をはじめる',
+                    child: const Text(
+                  '登録',
                   style: TextStyle(fontSize: 24, fontFamily: 'Rampart One'),
                 )),
               )),
