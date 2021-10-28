@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:wktk/service/auth_service.dart';
 import 'package:wktk/view/profile_edit_view.dart';
@@ -96,14 +96,13 @@ class ProfileViewBody extends StatelessWidget {
                                   child: OutlinedButton(
                                       style: ButtonStyle(),
                                       onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return ProfileEditView();
-                                                },
-                                                fullscreenDialog: true));
+                                        showBarModalBottomSheet(
+                                          expand: false,
+                                          context: context,
+                                          backgroundColor: Colors.transparent,
+                                          builder: (context) =>
+                                              ProfileEditView(),
+                                        );
                                       },
                                       child: Text('プロフィールを編集')))
                             ],

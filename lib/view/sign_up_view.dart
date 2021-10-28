@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:wktk/service/auth_service.dart';
 import 'package:wktk/view/main_view.dart';
-import 'package:wktk/view/profile_edit_view.dart';
+import 'package:wktk/view/profile_register_view.dart';
 import 'package:wktk/view_model/sign_up_view_model.dart';
 
 class SignUpView extends StatelessWidget {
@@ -69,7 +69,8 @@ class SignUpViewBody extends StatelessWidget {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ProfileEditView()));
+                                    builder: (context) =>
+                                        ProfileRegisterView()));
                             return;
                           } catch (e) {
                             rethrow;

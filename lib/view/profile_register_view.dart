@@ -4,14 +4,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:wktk/service/auth_service.dart';
 import 'package:wktk/view/main_view.dart';
-import 'package:wktk/view_model/profile_edit_view_model.dart';
+import 'package:wktk/view_model/profile_register_view_model.dart';
 
-class ProfileEditView extends StatelessWidget {
+class ProfileRegisterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider<ProfileEditViewModel>(
-          create: (_) => ProfileEditViewModel())
+      ChangeNotifierProvider<ProfileRegisterViewModel>(
+          create: (_) => ProfileRegisterViewModel())
     ], child: CurrentUserGetFutureBuilder());
   }
 }
@@ -20,13 +20,13 @@ class ProfileEditView extends StatelessWidget {
 // プロフィール画像を表示する部分
 class CurrentUserGetFutureBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
-    var vm = Provider.of<ProfileEditViewModel>(context, listen: false);
+    var vm = Provider.of<ProfileRegisterViewModel>(context, listen: false);
     return FutureBuilder(
         future: AuthService().getCurrentUser(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             vm.currentUser = snapshot.data as User?;
-            return ProfileEditViewBody();
+            return ProfileRegisterViewBody();
           } else {
             return CircularProgressIndicator();
           }
@@ -34,16 +34,19 @@ class CurrentUserGetFutureBuilder extends StatelessWidget {
   }
 }
 
-class ProfileEditViewBody extends StatelessWidget {
+class ProfileRegisterViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO:ViewModel初期化時にエラーしてるっぽい
-    var vm = Provider.of<ProfileEditViewModel>(context, listen: false);
+    var vm = Provider.of<ProfileRegisterViewModel>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Expanded(child: Text(''), flex: 2),
+          Text('アカウントを作成しました！', style: TextStyle(fontSize: 28)),
+          Text('プロフィール画像とアカウント名を設定しましょう。', style: TextStyle(fontSize: 18)),
           Expanded(child: Text(''), flex: 1),
           Container(
               width: 200,
@@ -77,8 +80,9 @@ class ProfileEditViewBody extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
               child: TextFormField(
                 decoration: InputDecoration(labelText: "ユーザー名"),
-                controller: TextEditingController()
-                  ..text = vm.currentUser!.displayName!,
+                onChanged: (String value) {
+                  vm.currentUserName = value;
+                },
               )),
           Padding(
               padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
