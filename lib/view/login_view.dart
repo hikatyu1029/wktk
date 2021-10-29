@@ -59,8 +59,8 @@ class LoginViewBody extends StatelessWidget {
                 ? null
                 : () async {
                     try {
-                      if (await vm.login() ==
-                          FirebaseAuthResultStatus.Successful) {
+                      FirebaseAuthResultStatus result = await vm.login();
+                      if (result == FirebaseAuthResultStatus.Successful) {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -71,10 +71,10 @@ class LoginViewBody extends StatelessWidget {
                           context: context,
                           builder: (context) {
                             return SimpleDialog(
-                              title: Text('タイトル'),
+                              title: Text('エラー'),
                               children: [
                                 SimpleDialogOption(
-                                  child: Text('中身'),
+                                  child: Text(exceptionMessage(result)),
                                   onPressed: () => Navigator.pop(context),
                                 )
                               ],
