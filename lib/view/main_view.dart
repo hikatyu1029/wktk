@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -17,15 +19,26 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('wktk'),
+          title: const Text('「w k t k」'),
+          centerTitle: false,
           actions: <Widget>[
             IconButton(
                 onPressed: () {},
                 icon: Icon(Icons.notifications),
                 tooltip: '通知です')
           ],
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
         ),
+        drawer: Drawer(
+            child: ListView(children: <Widget>[
+          ListTile(
+              title: Text("ログアウト"),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () {
+                // AuthServiceからのログアウト処理
+                Navigator.popUntil(context, (route) => route.isFirst);
+              }),
+        ])),
         body: MultiProvider(providers: [
           ChangeNotifierProvider(create: (context) => TimeLineViewModel())
         ], child: MainViewBody()),

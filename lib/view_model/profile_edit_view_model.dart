@@ -39,7 +39,7 @@ class ProfileEditViewModel extends ChangeNotifier {
   }
 
   Future updateCurrentUser() async {
-    _currentUserName ??= 'ゲスト';
+    _currentUserName = _currentUserName;
     return await AuthService().updateUser(name: _currentUserName);
   }
 }

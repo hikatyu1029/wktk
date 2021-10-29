@@ -79,6 +79,9 @@ class ProfileEditViewBody extends StatelessWidget {
                 decoration: InputDecoration(labelText: "ユーザー名"),
                 controller: TextEditingController()
                   ..text = vm.currentUser!.displayName!,
+                onChanged: (value) {
+                  vm.currentUserName = value;
+                },
               )),
           Padding(
               padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
@@ -97,8 +100,7 @@ class ProfileEditViewBody extends StatelessWidget {
                 onPressed: () async {
                   // TODO:アップデート失敗時の処理
                   vm.updateCurrentUser();
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MainView()));
+                  Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size(double.infinity, 50),

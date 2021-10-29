@@ -41,7 +41,7 @@ class ProfileViewBody extends StatelessWidget {
 
     return Column(children: [
       Expanded(
-        flex: 2,
+        flex: 3,
         child: Card(
           elevation: 3.0,
           shadowColor: Colors.grey,

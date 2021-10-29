@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wktk/service/auth_service.dart';
 import 'package:wktk/view/main_view.dart';
 import 'package:wktk/view_model/login_view_model.dart';
 
@@ -56,14 +57,29 @@ class LoginViewBody extends StatelessWidget {
           ElevatedButton(
             onPressed: !vm.loginAble
                 ? null
-                : () {
-                    // TODO:ログイン処理
+                : () async {
                     try {
-                      vm.login();
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MainView()));
+                      if (await vm.login() ==
+                          FirebaseAuthResultStatus.Successful) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MainView()));
+                        return;
+                      }
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return SimpleDialog(
+                              title: Text('タイトル'),
+                              children: [
+                                SimpleDialogOption(
+                                  child: Text('中身'),
+                                  onPressed: () => Navigator.pop(context),
+                                )
+                              ],
+                            );
+                          });
                     } catch (e) {
                       rethrow;
                     }
