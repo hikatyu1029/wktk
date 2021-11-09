@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "759451035703",
+    "project_id": "wktk-fcdaa",
+    "storage_bucket": "wktk-fcdaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759451035703:android:3e8f904843874c8efc77b2",
+        "android_client_info": {
+          "package_name": "hyorioka.com.example.wktk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759451035703-v46t6gsajjcee7ujjuufu79a8qkag6av.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-hnl_9C4_yj1vHvmVjGp3FF6u5p_b4ZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759451035703-v46t6gsajjcee7ujjuufu79a8qkag6av.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "759451035703-72nuoki3oulib2pbej7os0u1dejrij6a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "hyorioka.com.example.wktk"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
