@@ -37,6 +37,7 @@ class SignUpViewModel extends ChangeNotifier {
       final FirebaseAuth auth = FirebaseAuth.instance;
       AuthService().createUser(newUserEmail, newUserPassword);
     } catch (e) {
+      // TODO:Sign up処理のエラーハンドリング
       rethrow;
     }
   }

@@ -8,6 +8,7 @@ class AuthService {
     return _firebaseAuth.currentUser;
   }
 
+  //TODO:Log in処理を参考にエラーハンドリング
   Future createUser(String email, String password) async {
     try {
       UserCredential userCredential = await _firebaseAuth
@@ -23,6 +24,7 @@ class AuthService {
     }
   }
 
+//TODO:Log in処理を参考にエラーハンドリング
   Future updateUser({String? name, String? photoURL}) async {
     try {
       User? currentUser = await getCurrentUser();
@@ -57,6 +59,7 @@ class AuthService {
     return resultStatus;
   }
 
+  //TODO:LogOutの対応を検討する
   Future logout() async {
     try {
       await _firebaseAuth.signOut();

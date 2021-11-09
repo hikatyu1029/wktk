@@ -73,6 +73,7 @@ class SignUpViewBody extends StatelessWidget {
                                         ProfileRegisterView()));
                             return;
                           } catch (e) {
+                            // TODO:Sign up　処理のエラーハンドリング
                             rethrow;
                           }
                         },
