@@ -31,8 +31,6 @@ class ProfileRegisterViewModel extends ChangeNotifier {
   Image profileImage = Image.network(
       'https://cdn.icon-icons.com/icons2/1674/PNG/512/person_110935.png');
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
   void setProfileImage(Image img) {
     profileImage = img;
     notifyListeners();

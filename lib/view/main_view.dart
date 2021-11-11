@@ -1,11 +1,7 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:wktk/view/component/bottom_navigation_bar.dart';
-import 'package:wktk/view/component/timeline_tile.dart';
 import 'package:wktk/view/favorite_view.dart';
 import 'package:wktk/view/post_view.dart';
 import 'package:wktk/view/profile_view.dart';

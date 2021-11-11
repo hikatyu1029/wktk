@@ -37,9 +37,9 @@ class SignUpViewBody extends StatelessWidget {
         Column(
           children: [
             Padding(
-                padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
+                padding: const EdgeInsets.fromLTRB(25.0, 0, 25.0, 0),
                 child: TextFormField(
-                  decoration: InputDecoration(labelText: "メールアドレス"),
+                  decoration: const InputDecoration(labelText: "メールアドレス"),
                   onChanged: (String value) {
                     vm.newUserEmail = value;
                     vm.checkRegistrable();
@@ -47,9 +47,9 @@ class SignUpViewBody extends StatelessWidget {
                 )),
             // パスワードの入力フォーム
             Padding(
-              padding: EdgeInsets.fromLTRB(25.0, 0, 25.0, 10.0),
+              padding: const EdgeInsets.fromLTRB(25.0, 0, 25.0, 10.0),
               child: TextFormField(
-                decoration: InputDecoration(labelText: "パスワード（8～20文字）"),
+                decoration: const InputDecoration(labelText: "パスワード（8～20文字）"),
                 obscureText: true, // パスワードが見えないようRにする
                 maxLength: 20, // 入力可能な文字数
                 onChanged: (String value) {

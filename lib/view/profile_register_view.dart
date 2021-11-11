@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,9 +37,11 @@ class CurrentUserGetFutureBuilder extends StatelessWidget {
 }
 
 class ProfileRegisterViewBody extends StatelessWidget {
+  late File _image;
+  bool imgAvail = false;
   Widget build(BuildContext context) {
     // TODO:ViewModel初期化時にエラーしてるっぽい
-    var vm = Provider.of<ProfileRegisterViewModel>(context, listen: false);
+    var vm = Provider.of<ProfileRegisterViewModel>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -59,9 +63,7 @@ class ProfileRegisterViewBody extends StatelessWidget {
                 child: Material(
                   color: Colors.transparent,
                   child: Ink.image(
-                    image: (Image.network(
-                            'https://pbs.twimg.com/profile_images/479856017438556160/TUPKOb9i_400x400.jpeg')
-                        .image),
+                    image: vm.profileImage.image,
                     fit: BoxFit.cover,
                     width: 128,
                     height: 128,
@@ -69,8 +71,9 @@ class ProfileRegisterViewBody extends StatelessWidget {
                       onTap: () async {
                         // Pick an image
                         final ImagePicker _picker = ImagePicker();
-                        final XFile? image = await _picker.pickImage(
+                        final pickerFile = await _picker.pickImage(
                             source: ImageSource.gallery);
+                        vm.setProfileImage(Image.file(File(pickerFile!.path)));
                       },
                     ),
                   ),
