@@ -40,7 +40,7 @@ class ProfileRegisterViewBody extends StatelessWidget {
   late File _image;
   bool imgAvail = false;
   Widget build(BuildContext context) {
-    // TODO:ViewModel初期化時にエラーしてるっぽい
+    // プロフィールイメージを選択後、viewModelでnotifiyListnersを起動するため、listen: true
     var vm = Provider.of<ProfileRegisterViewModel>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -69,7 +69,6 @@ class ProfileRegisterViewBody extends StatelessWidget {
                     height: 128,
                     child: InkWell(
                       onTap: () async {
-                        // Pick an image
                         final ImagePicker _picker = ImagePicker();
                         final pickerFile = await _picker.pickImage(
                             source: ImageSource.gallery);
