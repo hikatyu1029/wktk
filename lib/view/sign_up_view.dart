@@ -64,18 +64,28 @@ class SignUpViewBody extends StatelessWidget {
                   onPressed: !vm.registrable
                       ? null
                       : () async {
-                          try {
-                            vm.SignUp();
+                          FirebaseAuthResultStatus result = await vm.SignUp();
+                          if (result == FirebaseAuthResultStatus.Successful) {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         ProfileRegisterView()));
                             return;
-                          } catch (e) {
-                            // TODO:Sign up　処理のエラーハンドリング
-                            rethrow;
                           }
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return SimpleDialog(
+                                  title: Text('エラー'),
+                                  children: [
+                                    SimpleDialogOption(
+                                      child: Text(exceptionMessage(result)),
+                                      onPressed: () => Navigator.pop(context),
+                                    )
+                                  ],
+                                );
+                              });
                         },
                   style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),

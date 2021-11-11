@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
               create: (context) => BottomNavigationBarProvider()),
         ],
         child: MaterialApp(
-          initialRoute: '/firest',
-          routes: {'/first': (context) => StartView()},
+          initialRoute: '/wktk',
+          routes: {'/wktk': (context) => StartView()},
           title: 'wktk',
           theme: ThemeData(primarySwatch: Colors.deepOrange),
 

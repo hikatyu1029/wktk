@@ -58,31 +58,27 @@ class LoginViewBody extends StatelessWidget {
             onPressed: !vm.loginAble
                 ? null
                 : () async {
-                    try {
-                      FirebaseAuthResultStatus result = await vm.login();
-                      if (result == FirebaseAuthResultStatus.Successful) {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MainView()));
-                        return;
-                      }
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return SimpleDialog(
-                              title: Text('エラー'),
-                              children: [
-                                SimpleDialogOption(
-                                  child: Text(exceptionMessage(result)),
-                                  onPressed: () => Navigator.pop(context),
-                                )
-                              ],
-                            );
-                          });
-                    } catch (e) {
-                      rethrow;
+                    FirebaseAuthResultStatus result = await vm.login();
+                    if (result == FirebaseAuthResultStatus.Successful) {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MainView()));
+                      return;
                     }
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return SimpleDialog(
+                            title: Text('エラー'),
+                            children: [
+                              SimpleDialogOption(
+                                child: Text(exceptionMessage(result)),
+                                onPressed: () => Navigator.pop(context),
+                              )
+                            ],
+                          );
+                        });
                   },
             child: Text('ログイン'),
           )

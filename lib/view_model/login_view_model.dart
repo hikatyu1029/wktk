@@ -8,6 +8,8 @@ class LoginViewModel extends ChangeNotifier {
   String password = '';
   bool loginAble = false;
 
+  // ログイン処理を実行
+  // ログイン処理の結果FirebaseAuthResultStatusを返却
   Future<FirebaseAuthResultStatus> login() async {
     // メール/パスワードでログイン
     return await AuthService().login(email: email, password: password);

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-// 認証関連サービス
+/// 認証関連サービス
+/// 会員の登録、ログイン、ログアウト、ユーザー情報の更新などを行う。
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
@@ -8,20 +10,27 @@ class AuthService {
     return _firebaseAuth.currentUser;
   }
 
-  //TODO:Log in処理を参考にエラーハンドリング
+  /// 会員登録
+  /// 会員登録処理の結果をFirebaseAuthResultStatusへ格納して返却する
   Future createUser(String email, String password) async {
+    FirebaseAuthResultStatus resultStatus;
     try {
-      UserCredential userCredential = await _firebaseAuth
+      final UserCredential result = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+      final User user = result.user!;
+      debugPrint("会員登録成功");
+
+      if (user != null) {
+        resultStatus = FirebaseAuthResultStatus.Successful;
+      } else {
+        resultStatus = FirebaseAuthResultStatus.Undefined;
       }
-    } catch (e) {
-      print(e);
+    } on FirebaseAuthException catch (e) {
+      debugPrint(e.code);
+      debugPrint('会員登録NG:${e.toString()}');
+      resultStatus = handleException(e);
     }
+    return resultStatus;
   }
 
 //TODO:Log in処理を参考にエラーハンドリング
@@ -43,7 +52,7 @@ class AuthService {
       final UserCredential result = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
       final User user = result.user!;
-      print('ログインOK:${user.email}');
+      debugPrint('ログインOK:${user.email}');
 
       if (result.user! != null) {
         resultStatus = FirebaseAuthResultStatus.Successful;
@@ -51,8 +60,8 @@ class AuthService {
         resultStatus = FirebaseAuthResultStatus.Undefined;
       }
     } on FirebaseAuthException catch (e) {
-      print(e.code);
-      print('ログインNG:${e.toString()}');
+      debugPrint(e.code);
+      debugPrint('ログインNG:${e.toString()}');
       resultStatus = handleException(e);
     }
 
@@ -105,6 +114,9 @@ FirebaseAuthResultStatus handleException(FirebaseAuthException e) {
       result = FirebaseAuthResultStatus.TooManyRequests;
       break;
     case 'email-already-exists':
+      result = FirebaseAuthResultStatus.EmailAlreadyExists;
+      break;
+    case 'email-already-in-use':
       result = FirebaseAuthResultStatus.EmailAlreadyExists;
       break;
     default:

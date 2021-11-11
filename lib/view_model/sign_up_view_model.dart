@@ -9,10 +9,6 @@ class SignUpViewModel extends ChangeNotifier {
   late String newUserPassword = '';
   bool registrable = false;
 
-  Future<void> AddUserWithEMail() async {
-    return;
-  }
-
   void checkRegistrable() {
     if (checkEmail() && checkPassword()) {
       registrable = true;
@@ -31,14 +27,8 @@ class SignUpViewModel extends ChangeNotifier {
     return UserCommon.checkEmailFormat(newUserEmail);
   }
 
-  Future<void> SignUp() async {
-    try {
-      // メールアドレス、パスワードでユーザー登録
-      final FirebaseAuth auth = FirebaseAuth.instance;
-      AuthService().createUser(newUserEmail, newUserPassword);
-    } catch (e) {
-      // TODO:Sign up処理のエラーハンドリング
-      rethrow;
-    }
+  /// VMで保持しているemail,passwordで新規会員登録
+  Future<FirebaseAuthResultStatus> SignUp() async {
+    return await AuthService().createUser(newUserEmail, newUserPassword);
   }
 }
